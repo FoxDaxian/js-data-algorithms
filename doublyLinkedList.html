@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    function linkedList() {
+        var Node = function(element) {
+            this.el = element
+            this.next = null
+            this.prev = null
+        }
+        var length = 0
+
+        var head = null
+        var tail = null
+        // 调试观察
+        this.head = head
+        this.tail = tail
+
+        // 获取链表长度
+        this.size = function() {
+            return length
+        }
+
+        // 在指定位置添加一个新的项
+        this.insert = function(position, element) {
+            var internalNode = new Node(element)
+            var current = head
+            var lastNode
+            var index = 0
+            if (position >= 0 && position <= length) {
+                if (position === 0) {
+                    if (!head) {
+                        this.head = head = internalNode
+                        this.tail = tail = internalNode
+                    } else {
+                        head.prev = internalNode
+                        internalNode.next = head
+                        this.head = head = internalNode
+
+                    }
+                    
+                } else if (position === length) {
+                    current = tail
+                    current.next = internalNode
+                    internalNode.prev = current
+                    this.tail = tail = internalNode
+                } else {
+                    while (index++ < length) {
+                        lastNode = current
+                        current = current.next
+                        if (index === position) {
+                            lastNode.next = internalNode
+                            internalNode.prev = lastNode
+                            internalNode.next = current
+                            current.prev = internalNode
+                        }
+                    }
+                }
+                length++
+                return true
+            } else {
+                return false
+            }
+        }
+
+        // 从链表中移除指定位置的一项
+        this.removeAt = function(position) {
+            var current = head
+            var lastNode
+            var index = 0
+            if (position >= 0 && position < length) {
+                if (!position) {
+                    this.head = head = current.next
+                } else {
+                    while (index++ < position) {
+                        lastNode = current
+                        current = current.next
+                    }
+                    lastNode.next = current.next
+                }
+                length--
+                return current
+            } else {
+                return false
+            }
+
+        }
+        
+        // 链表是否为空
+        this.isEmpty = function() {
+            return !length
+        }
+    }
+
+    // 提供方法有:append、insert、removeAt、indexOf、remove
+    var instance = new linkedList()
+    instance.insert(0, '头')
+    instance.insert(1, '尾巴')
+    instance.insert(1, '第三个插进来的')
+    instance.insert(1, '第四个插进来的，应该在第二个位置')
+    instance.insert(0, '我才是真正的第一个')
+    instance.insert(5, '我才是真正的最后一个')
+    console.log('------------结果分割线--------------------');
+    console.log(instance.head)
+    console.log(instance.tail)
+    console.log(instance.size())
+    </script>
+</body>
+
+</html>
