@@ -74,24 +74,33 @@
             var current = head
             var lastNode
             var index = 0
-            if (position >= 0 && position < length) {
-                if (!position) {
+            if (position >= 0 && position <= length) {
+                if (position === 0) {
                     this.head = head = current.next
+                    head.prev = null
+                } else if (position === length) {
+                    current = tail
+                    this.tail = tail = current.prev
+                    tail.next = null
                 } else {
-                    while (index++ < position) {
-                        lastNode = current
+                    while (index++ < length) {
+                        lastNode = head
                         current = current.next
+                        if (index === position) {
+                            lastNode.next = current.next
+                            current.next.prev = lastNode
+                            break
+                        }
                     }
-                    lastNode.next = current.next
                 }
                 length--
                 return current
             } else {
-                return false
+                return null
             }
 
         }
-        
+
         // 链表是否为空
         this.isEmpty = function() {
             return !length
@@ -106,10 +115,12 @@
     instance.insert(1, '第四个插进来的，应该在第二个位置')
     instance.insert(0, '我才是真正的第一个')
     instance.insert(5, '我才是真正的最后一个')
+    instance.removeAt(1)
     console.log('------------结果分割线--------------------');
     console.log(instance.head)
     console.log(instance.tail)
     console.log(instance.size())
+    // 循环列表就是头尾相连的
     </script>
 </body>
 

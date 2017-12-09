@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    var BinarySearchTree = function() {
+        var Node = function(value) {
+            this.value = value
+            this.left = null
+            this.right = null
+        }
+
+        var root = null
+        this.root = root
+
+        // 插入树的内部方法
+        var internalInsert = function(rootOrLikeRoot, node) {
+            if (node.value < rootOrLikeRoot.value) {
+                // 放在父节点的左边
+                if (rootOrLikeRoot.left !== null) {
+                    internalInsert(rootOrLikeRoot.left, node)
+                    return
+                }
+                rootOrLikeRoot.left = node
+            } else {
+                // 放在父节点的右边
+                if (rootOrLikeRoot.right !== null) {
+                    internalInsert(rootOrLikeRoot.right, node)
+                    return
+                }
+                rootOrLikeRoot.right = node
+            }
+        }
+
+        this.insert = function(value) {
+            var node = new Node(value)
+            if (root === null) {
+                this.root = root = node
+            } else {
+                internalInsert(root, node)
+            }
+        }
+
+        var internalInorderTravesal = function(node) {
+            if (node !== null) {
+                internalInorderTravesal(node.left)
+                console.log(node.value)
+                internalInorderTravesal(node.right)
+            }
+        }
+
+        // 中序遍历，左根右
+        this.inorderTravesal = function() {
+            internalInorderTravesal(root)
+        }
+
+        var internalPreOrderTravesal = function(node) {
+            if (node !== null) {
+                console.log(node.value)
+                internalPreOrderTravesal(node.left)
+                internalPreOrderTravesal(node.right)
+            }
+        }
+
+        // 先序排序，根左右
+        this.preOrderTravesal = function() {
+        	internalPreOrderTravesal(root)
+        }
+
+        var internalPostOrderTravesal = function(node) {
+            if (node !== null) {
+                internalPostOrderTravesal(node.left)
+                internalPostOrderTravesal(node.right)
+                console.log(node.value)
+            }
+        }
+
+        // 后序排序，左右根
+        this.PostOrderTravesal = function() {
+        	internalPostOrderTravesal(root)
+        }
+
+        this.min = function(root) {
+        	var current = root
+        	while (current.left) {
+        		current = current.left
+        	}
+        	return current.value
+        }
+
+        this.max = function() {
+        	var current = root
+        	while (current.right) {
+        		current = current.right
+        	}
+        	return current.value
+        }
+
+        this.search = function(value) {
+        	var current = root
+        	while (true) {
+        		if (current === null) {
+        			return false
+        		}
+        		if (value < current.value) {
+        			current = current.left
+        		} else if (value > current.value) {
+        			current = current.right
+        		} else {
+        			return current
+        		}
+        	}
+        }
+
+        var internalRemove = function(rootOrLikeRoot, value) {
+        	if (value < rootOrLikeRoot.value) {
+        		console.log(1);
+        	} else {
+
+        	}
+        }
+
+        this.remove = function(value) {
+        	var current = root
+        	var prev
+        	while (true) {
+        		if (current === null) {
+        			return false
+        		}
+        		if (value < current.value) {
+        			prev = current
+        			current = current.left
+        		} else if (value > current.value) {
+        			prev = current
+        			current = current.right
+        		} else {
+        			if (current.left === null && current.right === null) {
+        				if (prev.value > current.value) {
+        					prev.left = null
+        				} else {
+        					prev.right = null
+        				}
+        			}
+
+        			if (current.left === null) {
+        				// 右边有值
+        				if (prev.value > current.value) {
+        					prev.left = current.right
+        				} else {
+        					prev.right = current.right
+        				}
+        			} else if (current.right === null) {
+        				// 左边有值
+        				if (prev.value > current.value) {
+        					prev.left = current.left
+        				} else {
+        					prev.right = current.left
+        				}
+        			}
+
+        			if (current.left !== null && current.right !== null) {
+        				var value = this.min(current.right)
+        				this.remove(value)
+        				current.value = value
+        			}
+
+
+        			return current
+        		}
+        	}
+        }
+    }
+    var bst = new BinarySearchTree()
+    bst.insert(12)
+    bst.insert(7)
+    bst.insert(4)
+    bst.insert(10)
+    bst.insert(11)
+    bst.insert(9)
+    bst.insert(19)
+    bst.insert(13)
+    bst.insert(25)
+
+    bst.remove(7)
+    console.log(JSON.stringify(bst.root, null, 4))
+    </script>
+</body>
+
+</html>

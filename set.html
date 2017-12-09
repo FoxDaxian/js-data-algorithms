@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function Set() {
+			var items = {}
+			this.items = items
+			this.has = function(value) {
+				return items.hasOwnProperty(value)
+			}
+			this.add = function(key, value) {
+				if (!this.has(key)) {
+					items[key] = value
+					return true
+				}
+				return false
+			}
+			this.remove = function(key) {
+				if (this.has(key)) {
+					delete items[key]
+					return true
+				}
+				return false
+			}
+		}
+
+		var set1 = new Set()
+		set1.add('name', '冯世雨')
+		set1.add('age', '24')
+		set1.add('type', 'humen')
+		console.log(set1.items)
+
+		var set2 = new Set()
+		set2.add('name', '朱丽')
+		set2.add('age', '23')
+		set2.add('type', 'humen')
+		console.log(set2.items)
+	</script>
+</body>
+</html>
