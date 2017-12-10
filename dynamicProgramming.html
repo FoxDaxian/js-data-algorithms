@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    // 例如，美国有以下面额（硬币）：d 1 =1，d 2 =5，d 3 =10，d 4 =25。
+    // 如果要找36美分的零钱，我们可以用1个25美分、1个10美分和1个便士（1美分）。
+    function MinCoinChange(coins) {
+        var coins = coins
+        var cache = {}
+        this.makeChange = function(amount) {
+            var me = this
+            if (!amount) {
+                return []
+            }
+            if (cache[amount]) {
+                return cache[amount]
+            }
+            var min = [],
+                newMin, newAmount;
+            for (var i = 0; i < coins.length; i++) {
+                var coin = coins[i]
+                newAmount = amount - coin
+                if (newAmount >= 0) {
+                    newMin = me.makeChange(newAmount)
+                }
+                if (
+                    newAmount >= 0 &&
+                    (newMin.length < min.length - 1 || !min.length)
+                    &&
+                    (newMin.length || !newAmount)
+                ) {
+                    min = [coin].concat(newMin)
+                    console.log('new Min ' + min + ' for ' + amount);
+                }
+            }
+            return (cache[amount] = min)
+        }
+    }
+    </script>
+</body>
+
+</html>
